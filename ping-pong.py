@@ -17,28 +17,35 @@ class Gamesprite(sprite.Sprite):
 class Player(Gamesprite):
     def update_l(self):
         keys = key.get_pressed()
-        if keys[K_w] and self.rect.y > 5:
+        if keys[K_w] and self.rect.y > 9:
             self.rect.y -= self.speed
-        if keys[K_s] and self.rect.y < 1420:
+        if keys[K_s] and self.rect.y < 800:
             self.rect.y += self.speed
     def update_r(self):
         keys = key.get_pressed()
-        if keys[K_UP] and self.rect.x > 5:
+        if keys[K_UP] and self.rect.y > 9:
             self.rect.y -= self.speed
-        if keys[K_DOWN] and self.rect.x < 1420:
+        if keys[K_DOWN] and self.rect.y < 800:
             self.rect.y += self.speed
 
 window = display.set_mode((1500 , 1000))
 display.set_caption('ping-pong')
 background = transform.scale(image.load('background.jpg') , (1500 , 1000))
 game = True
+rocket_l = Player(20 , 109 , 10 , 'racket.png' , 100 , 200)
+rocket_r = Player(20 , 1300 , 10 , 'racket.png' , 100 , 200)
+clock = time.Clock()
 while game:
     window.blit(background , (0 , 0))
+    rocket_l.update_l()
+    rocket_r.update_r()
+    rocket_r.reset()
+    rocket_l.reset()
     
     for e in event.get():
         if e.type == QUIT:
             finish = True
             game = False
 
-    time.delay(60)
+    clock.tick(80)
     display.update()
